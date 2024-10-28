@@ -31,8 +31,9 @@
   <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
   <link rel="stylesheet" href="assets/css/plugins.min.css" />
   <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="assets/css/estilo.css" />
 
-  
+
 </head>
 
 <body>
@@ -74,8 +75,10 @@
                   <li>
                   <li class="nav-item active">
                     <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
-                      <i class="fas fa-home"></i>
-                      <p>Dashboard</p>
+                    <i class="far fa-check-square"></i> <!-- Ícono regular de un cuadro con chequeo -->
+
+
+                      <p>Tableros</p>
 
                     </a>
                     <div class="collapse" id="dashboard">
@@ -84,9 +87,7 @@
                   <div class="collapse" id="subnav1">
                     <ul class="nav nav-collapse subnav">
                       <li>
-                        <a href="#">
-                          <span class="sub-item">Level 2</span>
-                        </a>
+                        
                       </li>
                       <li>
                         <a href="#">
@@ -97,10 +98,7 @@
                   </div>
             </li>
             <li>
-              <a data-bs-toggle="collapse" href="#subnav2">
-                <span class="sub-item">Level 1</span>
-                <span class="caret"></span>
-              </a>
+              
               <div class="collapse" id="subnav2">
                 <ul class="nav nav-collapse subnav">
                   <li>
@@ -112,8 +110,13 @@
               </div>
             </li>
             <li>
-              <a href="#">
-                <span class="sub-item">Level 1</span>
+              <a href="{{ route('tableros.index') }}">
+                <span class="sub-item">Tableros</span>
+              </a>
+            </li>
+            <li>
+              <a href="/component-test">
+                <span class="sub-item">Ejemplo Component</span>
               </a>
             </li>
           </ul>
@@ -184,9 +187,6 @@
 
             <li class="nav-item topbar-user dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                <div class="avatar-sm">
-                  <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
-                </div>
                 <span class="profile-username">
                   <span class="op-7">Hola,</span>
                   <span class="fw-bold">{{ Auth::user()->name }}!</span>
@@ -196,21 +196,16 @@
                 <div class="dropdown-user-scroll scrollbar-outer">
                   <li>
                     <div class="user-box">
-                      <div class="avatar-lg">
-                        <img src="assets/img/profile.jpg" alt="image profile" class="avatar-img rounded" />
-                      </div>
+                    
                       <div class="u-text">
-                        <h4>Hizrian</h4>
-                        <p class="text-muted">hello@example.com</p>
+                        <p class="text-muted">{{ Auth::user()->email }}</p>
                         <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                       </div>
                     </div>
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">My Profile</a>
-                    <a class="dropdown-item" href="#">My Balance</a>
-                    <a class="dropdown-item" href="#">Inbox</a>
+                    <a class="dropdown-item" href="/profile">My Profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Account Setting</a>
                     <div class="dropdown-divider"></div>
@@ -226,7 +221,8 @@
     </div>
 
     <div class="container">
-      
+      @yield('content')
+    
     </div>
 
     <footer class="footer">
@@ -241,14 +237,12 @@
             <li class="nav-item">
               <a class="nav-link" href="#"> Help </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"> Licenses </a>
-            </li>
+
           </ul>
         </nav>
         <div class="copyright">
           2024, made with <i class="fa fa-heart heart text-danger"></i> by
-          <a href="http://www.themekita.com">ThemeKita</a>
+          <a href="http://www.themekita.com">Fabrizio Armoa y Lucas Gimenez</a>
         </div>
       </div>
     </footer>

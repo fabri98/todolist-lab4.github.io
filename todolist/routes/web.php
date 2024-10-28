@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TableroController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return view('index');
     });
+
+    // Tableros
+
+    Route::get('/tableros', [TableroController::class, 'index'])->name('tableros.index');
+    Route::post('/tableros', [TableroController::class, 'store'])->name('tableros.store');
+
+    // ejercicio de clase
+    Route::get('/component-test', function () {
+        return view('ejemplo-component');
+    });
+    
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
