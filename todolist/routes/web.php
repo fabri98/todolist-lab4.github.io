@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableroController;
+use App\Http\Controllers\ListaController;
+use App\Http\Controllers\TareaController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +35,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tableros', [TableroController::class, 'index'])->name('tableros.index');
     Route::post('/tableros', [TableroController::class, 'store'])->name('tableros.store');
+    Route::resource('tableros', TableroController::class);
+    // Listas y Tareas
+    Route::resource('listas', ListaController::class);
+    Route::resource('tareas', TareaController::class);
+    
 
     // ejercicio de clase
     Route::get('/component-test', function () {

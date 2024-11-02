@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lista;
+use App\Models\Tablero;
 use Illuminate\Http\Request;
 
 class ListaController extends Controller
@@ -19,14 +20,6 @@ class ListaController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
     {
         //
     }
@@ -61,5 +54,20 @@ class ListaController extends Controller
     public function destroy(Lista $lista)
     {
         //
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'id_tablero' => 'required|exists:tableros,id',
+        ]);
+
+        Lista::create([
+            'nombre' => $request->nombre,
+            'id_tablero' => $request->id_tablero,
+            'autor' => auth()->user()->name, // Asumiendo que tienes autenticación
+        ]);
+
+        return redirect()->back()->with('success', 'Lista creada correctamente.');
     }
 }

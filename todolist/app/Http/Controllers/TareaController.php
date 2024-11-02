@@ -24,14 +24,6 @@ class TareaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Tarea $tarea)
@@ -62,4 +54,27 @@ class TareaController extends Controller
     {
         //
     }
+    public function store(Request $request)
+{
+    $request->validate([
+        'titulo' => 'required|string|max:255',
+        'descripcion' => 'required|string|max:255', // Validar descripción
+        'id_lista' => 'required|exists:listas,id',
+        'fecha_limite' => 'nullable|date', // Valida que sea una fecha válida
+        'estado' => 'required|string|in:pendiente,completada,en_progreso', // Validar estado
+        'prioridad' => 'required|string|in:baja,media,alta', // Validar prioridad
+    ]);
+
+    Tarea::create([
+        'titulo' => $request->titulo,
+        'descripcion' => $request->descripcion,
+        'id_lista' => $request->id_lista,
+        'fecha_limite' => $request->fecha_limite,
+        'estado' => $request->estado,
+        'prioridad' => $request->prioridad,
+        // Puedes agregar autor o cualquier otro campo adicional si es necesario
+    ]);
+
+    return redirect()->back()->with('success', 'Tarea creada correctamente.');
+}
 }

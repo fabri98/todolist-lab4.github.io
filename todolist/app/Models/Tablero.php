@@ -9,10 +9,11 @@ class Tablero extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'descripcion']; 
 
     
-    public function listas(){
-        return $this->hasMany(Lista::class,'id_tablero');
+    public function listas()
+    {
+        return $this->hasMany(Lista::class, 'id_tablero');
     }
 }

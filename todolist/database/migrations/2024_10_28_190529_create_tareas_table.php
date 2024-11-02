@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("id_lista")->constrained("listas");
-            $table->string("titulo");
-            $table->string("descripcion");
-            $table->date("fecha_limite");
-            $table->boolean("estado");
-            $table->enum("prioridad",['Alta', 'Intermedia', 'Baja']);
-
-            $table->timestamps();
+            $table->foreignId('id_lista')->constrained()->onDelete('cascade'); // Referencia a la lista
+            $table->string('titulo');
+            $table->string('descripcion')->nullable(); // Permitir nulo si no es necesario
+            $table->date('fecha_limite')->nullable(); // Permitir nulo si no es necesario
+            $table->enum('estado', ['pendiente', 'completada', 'en_progreso'])->default('pendiente');
+            $table->string('prioridad')->default('baja'); // Valor por defecto
+            $table->timestamps(); // Para created_at y updated_at
         });
     }
 

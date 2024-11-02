@@ -15,17 +15,21 @@ class TableroController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'descripcion' => 'nullable|string', // Asegúrate de validar la descripción
+    ]);
 
-        Tablero::create([
-            'name' => $request->name,
-        ]);
+    Tablero::create([
+        'name' => $request->name,
+        'descripcion' => $request->descripcion, // Guarda la descripción aquí
+    ]);
 
-        return redirect()->back()->with('success', 'Tablero creado exitosamente!');
-    }
+    return redirect()->route('tableros.index')->with('success', 'Tablero creado exitosamente.');
+}
+
+
 
     
     public function create()
@@ -60,8 +64,22 @@ class TableroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tablero $tablero)
-    {
-        //
+    public function destroy($id)
+{
+    // Encuentra el tablero por ID
+    $tablero = Tablero::with('listas')->findOrFail($id);
+    
+    // Elimina las listas asociadas
+    foreach ($tablero->listas as $lista) {
+        $lista->tareas()->delete(); // Eliminar tareas asociadas
+        $lista->delete(); // Eliminar la lista
     }
+
+    // Elimina el tablero
+    $tablero->delete();
+
+    // Redirige a la lista de tableros con un mensaje de éxito
+    return redirect()->route('tableros.index')->with('success', 'Tablero eliminado correctamente.');
+}
+
 }

@@ -6,6 +6,8 @@
   <title>To Do List</title>
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
   <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
 
   <!-- Fonts and icons -->
   <script src="assets/js/plugin/webfont/webfont.min.js"></script>
