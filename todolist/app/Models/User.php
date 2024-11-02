@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function tableros()
+    {
+        return $this->hasMany(Tablero::class, 'id_user');
+    }
 }
