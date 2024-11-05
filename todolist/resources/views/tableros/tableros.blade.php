@@ -34,73 +34,78 @@
                             <!-- Mostrar listas aquí -->
                             <div class="listas mt-3" id="listas-{{ $tablero->id }}" style="display: none;">
                                 @foreach($tablero->listas as $lista)
-                                    <div class="lista">
-                                        <h6>{{ $lista->nombre }}</h6>
-                                        
-                                        <!-- Botón para agregar tarea -->
-                                        <button class="btn btn-secondary mt-2" data-bs-toggle="modal" data-bs-target="#agregarTareaModal-{{ $lista->id }}">Agregar Tarea</button>
+                                <div class="lista" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; background-color: #f9f9f9;">
+                                    <h6>{{ $lista->nombre }}</h6>
+                                    
+                                    <!-- Botón para expandir la lista -->
+                                    <button class="btn btn-secondary mt-2 expand-list-btn" onclick="toggleList({{ $lista->id }}, this)">
+                                        <span id="list-arrow-icon-{{ $lista->id }}" class="bi bi-arrow-down"></span>
+                                    </button>
 
-                                        <!-- Modal para agregar tarea -->
-                                        <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1" aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="agregarTareaModalLabel">Agregar Tarea</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="{{ route('tareas.store') }}" method="POST">
-                                                            @csrf
-                                                            <input type="hidden" name="id_lista" value="{{ $lista->id }}">
-                                                            
-                                                            <div class="form-group">
-                                                                <label for="titulo">Título de la Tarea</label>
-                                                                <input type="text" name="titulo" class="form-control" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="descripcion">Descripción de la Tarea</label>
-                                                                <input type="text" name="descripcion" class="form-control" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="fecha_limite">Fecha Límite</label>
-                                                                <input type="date" name="fecha_limite" class="form-control" required>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="estado">Estado</label>
-                                                                <select name="estado" class="form-control" required>
-                                                                    <option value="pendiente">Pendiente</option>
-                                                                    <option value="completada">Completada</option>
-                                                                    <option value="en_progreso">En Progreso</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="prioridad">Prioridad</label>
-                                                                <select name="prioridad" class="form-control" required>
-                                                                    <option value="baja">Baja</option>
-                                                                    <option value="media">Media</option>
-                                                                    <option value="alta">Alta</option>
-                                                                </select>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-secondary mt-2">Agregar Tarea</button>
-                                                        </form>
-                                                    </div>
+                                    <!-- Contenedor de tareas (oculto por defecto) -->
+                                    <div class="tareas" id="tareas-{{ $lista->id }}" style="display: none;">
+                                        @foreach($lista->tareas as $tarea)
+                                            <div class="tarea border rounded p-3 mb-2">
+                                                <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
+                                                <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
+                                                <p><strong>Estado:</strong> {{ $tarea->estado }}</p>
+                                                <p><strong>Prioridad:</strong> {{ $tarea->prioridad }}</p>
+                                                <p><strong>Fecha Límite:</strong> {{ $tarea->fecha_limite }}</p>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <!-- Botón para agregar tarea, visible solo cuando la lista está expandida -->
+                                    <button class="btn btn-secondary mt-2 agregar-tarea-btn" style="display: none;" data-bs-toggle="modal" data-bs-target="#agregarTareaModal-{{ $lista->id }}">Agregar Tarea</button>
+
+                                    <!-- Modal para agregar tarea -->
+                                    <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1" aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="agregarTareaModalLabel">Agregar Tarea</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('tareas.store') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="id_lista" value="{{ $lista->id }}">
+                                                        
+                                                        <div class="form-group">
+                                                            <label for="titulo">Título de la Tarea</label>
+                                                            <input type="text" name="titulo" class="form-control" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="descripcion">Descripción de la Tarea</label>
+                                                            <input type="text" name="descripcion" class="form-control" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="fecha_limite">Fecha Límite</label>
+                                                            <input type="date" name="fecha_limite" class="form-control" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="estado">Estado</label>
+                                                            <select name="estado" class="form-control" required>
+                                                                <option value="pendiente">Pendiente</option>
+                                                                <option value="completada">Completada</option>
+                                                                <option value="en_progreso">En Progreso</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="prioridad">Prioridad</label>
+                                                            <select name="prioridad" class="form-control" required>
+                                                                <option value="baja">Baja</option>
+                                                                <option value="media">Media</option>
+                                                                <option value="alta">Alta</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-secondary mt-2">Agregar Tarea</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Mostrar tareas de esta lista -->
-                                        <div class="tareas">
-                                            @foreach($lista->tareas as $tarea)
-                                                <div class="tarea border rounded p-3 mb-2"> <!-- Añadido borde, padding y margen inferior -->
-                                                    <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
-                                                    <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
-                                                    <p><strong>Estado:</strong> {{ $tarea->estado }}</p>
-                                                    <p><strong>Prioridad:</strong> {{ $tarea->prioridad }}</p>
-                                                    <p><strong>Fecha Límite:</strong> {{ $tarea->fecha_limite }}</p>
-                                                </div>
-                                            @endforeach
-                                        </div>
                                     </div>
+                                </div>
                                 @endforeach
                             </div>
 
@@ -135,7 +140,7 @@
                         <!-- Botones -->
                         <div class="d-flex justify-content-end mt-2">
                             <!-- Botón de Expandir -->
-                            <button class="btn btn-secondary expand-btn" onclick="toggleExpand({{ $tablero->id }})" id="expand-btn-{{ $tablero->id }}">
+                            <button class="btn btn-primary expand-btn" onclick="toggleExpand({{ $tablero->id }})" id="expand-btn-{{ $tablero->id }}">
                                 <span id="arrow-icon-{{ $tablero->id }}" class="bi bi-arrow-down"></span>
                             </button>
 
@@ -189,22 +194,34 @@
     function toggleExpand(tableroId) {
         const infoContainer = document.getElementById(`tablero-info-${tableroId}`);
         const listasContainer = document.getElementById(`listas-${tableroId}`);
-        const agregarListaButton = document.getElementById(`agregar-lista-${tableroId}`);
+        const agregarListaBtn = document.getElementById(`agregar-lista-${tableroId}`);
         const arrowIcon = document.getElementById(`arrow-icon-${tableroId}`);
 
-        // Cambiar la visibilidad de la información y listas
         if (infoContainer.style.display === "none") {
             infoContainer.style.display = "block";
             listasContainer.style.display = "block";
-            agregarListaButton.style.display = "block"; // Mostrar el botón "Agregar Lista"
-            arrowIcon.classList.remove("bi-arrow-down");
-            arrowIcon.classList.add("bi-arrow-up");
+            agregarListaBtn.style.display = "inline";
+            arrowIcon.classList.replace("bi-arrow-down", "bi-arrow-up");
         } else {
             infoContainer.style.display = "none";
             listasContainer.style.display = "none";
-            agregarListaButton.style.display = "none"; // Ocultar el botón "Agregar Lista"
-            arrowIcon.classList.remove("bi-arrow-up");
-            arrowIcon.classList.add("bi-arrow-down");
+            agregarListaBtn.style.display = "none";
+            arrowIcon.classList.replace("bi-arrow-up", "bi-arrow-down");
+        }
+    }
+
+    function toggleList(listaId, button) {
+        const tareasContainer = document.getElementById(`tareas-${listaId}`);
+        const agregarTareaBtn = button.nextElementSibling; // El botón "Agregar Tarea"
+
+        if (tareasContainer.style.display === "none") {
+            tareasContainer.style.display = "block";
+            agregarTareaBtn.style.display = "inline"; // Mostrar el botón "Agregar Tarea"
+            button.querySelector('span').classList.replace("bi-arrow-down", "bi-arrow-up");
+        } else {
+            tareasContainer.style.display = "none";
+            agregarTareaBtn.style.display = "none"; // Ocultar el botón "Agregar Tarea"
+            button.querySelector('span').classList.replace("bi-arrow-up", "bi-arrow-down");
         }
     }
 </script>
