@@ -48,13 +48,28 @@
                                 <!-- Contenedor de tareas, oculto por defecto -->
                                 <div class="tareas d-none" id="tareas-{{ $lista->id }}">
                                 @foreach($lista->tareas as $tarea)
-                                <div class="tarea border rounded p-3 mb-2">
+                                <div class="tarea border rounded p-3 mb-2 clickable" data-bs-toggle="modal" data-bs-target="#tareaModal-{{ $tarea->id }}">
                                 <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
-                                <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
                                 <p><strong>Estado:</strong> {{ $tarea->estado }}</p>
-                                <p><strong>Prioridad:</strong> {{ $tarea->prioridad }}</p>
-                                <p><strong>Fecha Límite:</strong> {{ $tarea->fecha_limite }}</p>
                             </div>
+                            <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+                                <!-- Modal para ver los detalles de las tareas -->
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="tareaModalLabel">Detalles de la Tarea</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
+                            <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
+                    <p><strong>Estado:</strong> {{ $tarea->estado }}</p>
+                    <p><strong>Prioridad:</strong> {{ $tarea->prioridad }}</p>
+                    <p><strong>Fecha Límite:</strong> {{ $tarea->fecha_limite }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
                             @endforeach
                         </div>
 
@@ -246,3 +261,4 @@ function toggleList(listaId, button) {
 
 
 </script>
+
