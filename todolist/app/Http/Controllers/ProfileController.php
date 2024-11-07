@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use Hash;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -14,9 +14,9 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function editarPerfil(Request $request): View
     {
-        return view('profile.edit', [
+        return view('profile/edit', [
             'user' => $request->user(),
         ]);
     }
@@ -24,37 +24,32 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function actualizarPerfil(Request $request)
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
-
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        // Validar los datos del formulario
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'nullable|string|min:8|confirmed', // Confirmación de contraseña
         ]);
 
-        $user = $request->user();
+        $user = Auth::user();
 
-        Auth::logout();
+        // Actualizar los campos del usuario
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
 
-        $user->delete();
+        // Actualizar la contraseña si se ha proporcionado una nueva
+        if ($request->input('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // Guardar los cambios en la base de datos
+        $user->save();
 
-        return Redirect::to('/');
+        // Redirigir con mensaje de éxito
+        return redirect()->route('perfil.editar')->with('success', 'Perfil actualizado correctamente.');
     }
+
+
 }

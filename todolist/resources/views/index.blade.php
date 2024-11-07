@@ -184,12 +184,7 @@
                 </form>
               </ul>
             </li>
-            <li class="nav-item topbar-icon dropdown hidden-caret">
-              <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-envelope"></i>
-              </a>
-            </li>
+          
 
             <li class="nav-item topbar-user dropdown hidden-caret">
               <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
@@ -210,7 +205,7 @@
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Mi Perfil</a>
+                    <a class="dropdown-item" href="{{ route('perfil.editar') }}">Mi Perfil</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                   </li>
