@@ -37,8 +37,7 @@
   <link rel="stylesheet" href="assets/css/plugins.min.css" />
   <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
   <link rel="stylesheet" href="assets/css/estilo.css" />
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+ 
 
 
 </head>
@@ -206,17 +205,14 @@
                     
                       <div class="u-text">
                         <p class="text-muted">{{ Auth::user()->email }}</p>
-                        <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                       </div>
                     </div>
                   </li>
                   <li>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/profile">My Profile</a>
+                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Mi Perfil</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Account Setting</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('profile.destroy') }}">Logout</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                   </li>
                 </div>
               </ul>
