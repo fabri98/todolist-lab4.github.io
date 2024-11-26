@@ -61,8 +61,7 @@ class TareaController extends Controller
         'descripcion' => 'required|string|max:255', // Validar descripción
         'id_lista' => 'required|exists:listas,id',
         'fecha_limite' => 'nullable|date', // Valida que sea una fecha válida
-        'estado' => 'required|string|in:pendiente,completada,en_progreso', // Validar estado
-        'prioridad' => 'required|string|in:baja,media,alta', // Validar prioridad
+        
     ]);
 
     Tarea::create([
@@ -71,8 +70,6 @@ class TareaController extends Controller
         'id_lista' => $request->id_lista,
         'fecha_limite' => $request->fecha_limite,
         'estado' => $request->estado,
-        'prioridad' => $request->prioridad,
-        // Puedes agregar autor o cualquier otro campo adicional si es necesario
     ]);
 
     return redirect()->back()->with('success', 'Tarea creada correctamente.');

@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 
     // Tableros
 
-    Route::get('/tableros', [TableroController::class, 'index'])->name('tableros.index');
+    Route::get('/tablero/{id}', [TableroController::class, 'show'])->name('tableros.show');
     Route::post('/tableros', [TableroController::class, 'store'])->name('tableros.store');
     Route::resource('tableros', TableroController::class);
     // Listas y Tareas

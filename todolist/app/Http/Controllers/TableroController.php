@@ -46,9 +46,12 @@ class TableroController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Tablero $tablero)
+    public function show($id)
     {
-        //
+        // Obtener el tablero con sus listas y tareas
+        $tablero = Tablero::with('listas.tareas')->findOrFail($id);
+
+        return view('tableros.show', compact('tablero'));
     }
 
     /**

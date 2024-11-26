@@ -13,7 +13,6 @@ class Tarea extends Model
         'descripcion',
         'fecha_limite',
         'estado',
-        'prioridad',
         'id_lista',
     ];
 
