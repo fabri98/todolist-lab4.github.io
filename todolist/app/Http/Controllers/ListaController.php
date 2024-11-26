@@ -51,9 +51,13 @@ class ListaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lista $lista)
+    public function eliminarLista($id)
     {
-        //
+        $lista = Lista::findOrFail($id);
+
+        $lista->delete();
+
+        return redirect()->back()->with('success', 'Lista eliminada correctamente.');
     }
     public function store(Request $request)
     {

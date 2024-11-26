@@ -21,7 +21,8 @@
     </button>
 
     <!-- Modal para agregar lista -->
-    <div class="modal fade" id="agregarListaModal" tabindex="-1" aria-labelledby="agregarListaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="agregarListaModal" tabindex="-1" aria-labelledby="agregarListaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,12 +65,14 @@
                         </li>
 
                         <!-- Modal para detalles de la tarea -->
-                        <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="tareaModalLabel">Detalles de la Tarea</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
@@ -83,16 +86,31 @@
                 </ul>
 
                 <!-- Botón para agregar tarea -->
-                <button class="btn btn-secondary mt-2 agregar-tarea-btn d-none" data-bs-toggle="modal" data-bs-target="#agregarTareaModal-{{ $lista->id }}">
+                <button class="btn btn-secondary mt-2 agregar-tarea-btn d-none" data-bs-toggle="modal"
+                    data-bs-target="#agregarTareaModal-{{ $lista->id }}">
                     Agregar Tarea
                 </button>
 
+                <!-- Botón para eliminar la lista -->
+
+                <form action="{{ route('lista.eliminar', $lista->id) }}" method="post"
+                    onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta lista? Esta acción no se puede deshacer.')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger mt-2">
+                        Eliminar Lista
+                    </button>
+                </form>
+
+
                 <!-- Modal para agregar tarea -->
-                <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1" aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
+                <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1"
+                    aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="agregarTareaModalLabel">Agregar Tarea a {{ $lista->nombre }}</h5>
+                                <h5 class="modal-title" id="agregarTareaModalLabel">Agregar Tarea a {{ $lista->nombre }}
+                                </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -105,7 +123,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="descripcion" class="form-label">Descripción</label>
-                                        <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
+                                        <textarea class="form-control" id="descripcion" name="descripcion"
+                                            required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="estado" class="form-label">Estado</label>

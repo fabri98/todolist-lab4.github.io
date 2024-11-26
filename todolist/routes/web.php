@@ -38,12 +38,7 @@ Route::middleware('auth')->group(function () {
     // Listas y Tareas
     Route::resource('listas', ListaController::class);
     Route::resource('tareas', TareaController::class);
-    
-
-    // ejercicio de clase
-    Route::get('/component-test', function () {
-        return view('ejemplo-component');
-    });
+    Route::delete('/listas/{id}/eliminar', [ListaController::class, 'eliminarLista'])->name('lista.eliminar');
     
 });
 
