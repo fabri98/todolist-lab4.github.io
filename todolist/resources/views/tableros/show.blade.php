@@ -63,6 +63,7 @@
                         <li class="clickable" data-bs-toggle="modal" data-bs-target="#tareaModal-{{ $tarea->id }}">
                             <strong>{{ $tarea->titulo }}</strong> - {{ $tarea->estado }}
                         </li>
+<<<<<<< HEAD
 
                         <!-- Modal para detalles de la tarea -->
                         <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel"
@@ -82,6 +83,8 @@
                                 </div>
                             </div>
                         </div>
+=======
+>>>>>>> 8623f4bcbcc352e62aef2e201ff5012d96ebda67
                     @endforeach
                 </ul>
 
@@ -140,6 +143,46 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Modales de tarea -->
+                @foreach($lista->tareas as $tarea)
+                    <!-- Modal para detalles de la tarea -->
+                    <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="tareaModalLabel">Detalles de la Tarea</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
+                                    <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
+                                    <p><strong>Estado:</strong> 
+                                    <form action="{{ route('tareas.update', $tarea->id) }}" method="POST" class="d-inline">
+    @csrf
+    @method('PUT')
+    <select name="estado" class="form-select" onchange="this.form.submit()">
+        <option value="Pendiente" {{ $tarea->estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
+        <option value="En Progreso" {{ $tarea->estado == 'En Progreso' ? 'selected' : '' }}>En Progreso</option>
+        <option value="Finalizada" {{ $tarea->estado == 'Finalizada' ? 'selected' : '' }}>Finalizada</option>
+    </select>
+</form>
+
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- Botón para eliminar tarea -->
+                                    <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Eliminar Tarea</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     @endforeach
