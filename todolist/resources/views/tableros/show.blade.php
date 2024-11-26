@@ -63,28 +63,6 @@
                         <li class="clickable" data-bs-toggle="modal" data-bs-target="#tareaModal-{{ $tarea->id }}">
                             <strong>{{ $tarea->titulo }}</strong> - {{ $tarea->estado }}
                         </li>
-<<<<<<< HEAD
-
-                        <!-- Modal para detalles de la tarea -->
-                        <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="tareaModalLabel">Detalles de la Tarea</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
-                                        <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
-                                        <p><strong>Estado:</strong> {{ $tarea->estado }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-=======
->>>>>>> 8623f4bcbcc352e62aef2e201ff5012d96ebda67
                     @endforeach
                 </ul>
 
