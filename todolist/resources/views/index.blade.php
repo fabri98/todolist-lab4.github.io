@@ -120,11 +120,6 @@
                 <span class="sub-item">Tableros</span>
               </a>
             </li>
-            <li>
-              <a href="/component-test">
-                <span class="sub-item">Ejemplo Component</span>
-              </a>
-            </li>
           </ul>
         </div>
         </li>
