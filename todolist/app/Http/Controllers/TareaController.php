@@ -43,17 +43,33 @@ class TareaController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Tarea $tarea)
-    {
-        //
-    }
+{
+    // Validar que el estado sea uno de los valores permitidos
+    $request->validate([
+        'estado' => 'required|in:Pendiente,En Progreso,Finalizada',
+    ]);
+
+    // Actualizar el estado de la tarea
+    $tarea->estado = $request->estado;
+    $tarea->save();
+
+    // Redirigir con un mensaje de éxito
+    return back()->with('success', 'Estado de la tarea actualizado');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Tarea $tarea)
     {
-        //
+        // Eliminar la tarea de la base de datos
+        $tarea->delete();
+    
+        // Redirigir con un mensaje de éxito
+        return back()->with('success', 'Tarea eliminada');
     }
+    
     public function store(Request $request)
 {
     $request->validate([

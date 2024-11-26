@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     // Listas y Tareas
     Route::resource('listas', ListaController::class);
     Route::resource('tareas', TareaController::class);
+    Route::delete('tareas/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+
     
 
     // ejercicio de clase
