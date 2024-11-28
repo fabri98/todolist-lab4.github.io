@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TableroController;
 use App\Http\Controllers\ListaController;
 use App\Http\Controllers\TareaController;
 
+use App\Mail\CorreoPrueba;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +42,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('tareas', TareaController::class);
     Route::delete('/listas/{id}/eliminar', [ListaController::class, 'eliminarLista'])->name('lista.eliminar');
     
+
+    // notificaciones
+    Route::get('/prueba-correo', [EmailController::class, 'enviarCorreo']);
+
 });
 
 require __DIR__ . '/auth.php';

@@ -1,0 +1,5 @@
+Si ejecuta el comando 
+    php artisan schedule:run
+
+se enviara una notificacion de las tareas pendientes a MailTrap
+
