@@ -14,16 +14,19 @@
 
 <div class="container mt-4">
     <!-- Información del tablero -->
-    <h1>{{ $tablero->name }}</h1>
-    <p>{{ $tablero->descripcion }}</p>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="titulo-tableros">{{ $tablero->name }}</h1>
 
-    <!-- Botón para agregar lista -->
-    <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#agregarListaModal">
-        Agregar Lista
-    </button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarListaModal">
+            Agregar Lista
+        </button>
+    </div>
+
+    <hr>
 
     <!-- Modal para agregar lista -->
-    <div class="modal fade" id="agregarListaModal" tabindex="-1" aria-labelledby="agregarListaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="agregarListaModal" tabindex="-1" aria-labelledby="agregarListaModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -46,7 +49,12 @@
     </div>
 
     <!-- Listas del tablero -->
-    <h2>Listas</h2>
+    <div class="text-center mt-4 mb-3">
+    <h2 class="fw-bold text-primary">Listas</h2>
+    <div class="mx-auto bg-primary rounded" style="width: 60px; height: 3px;"></div>
+</div>
+
+
     @foreach($tablero->listas as $lista)
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -56,12 +64,14 @@
                 </div>
                 <div>
                     <!-- Botón para agregar tarea -->
-                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#agregarTareaModal-{{ $lista->id }}">
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#agregarTareaModal-{{ $lista->id }}">
                         Agregar Tarea
                     </button>
 
                     <!-- Botón para eliminar lista -->
-                    <form action="{{ route('lista.eliminar', $lista->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta lista? Esta acción no se puede deshacer.')">
+                    <form action="{{ route('lista.eliminar', $lista->id) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta lista? Esta acción no se puede deshacer.')">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm">Eliminar Lista</button>
@@ -87,7 +97,8 @@
         </div>
 
         <!-- Modal para agregar tarea -->
-        <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1" aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
+        <div class="modal fade" id="agregarTareaModal-{{ $lista->id }}" tabindex="-1"
+            aria-labelledby="agregarTareaModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -107,6 +118,10 @@
                                 <textarea class="form-control" id="descripcion" name="descripcion" required></textarea>
                             </div>
                             <div class="mb-3">
+                                <label for="fecha_limite">Fecha Límite</label>
+                                <input type="date" name="fecha_limite" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="estado" class="form-label">Estado</label>
                                 <select class="form-control" id="estado" name="estado" required>
                                     <option value="Pendiente">Pendiente</option>
@@ -123,7 +138,8 @@
 
         <!-- Modal para detalles de la tarea -->
         @foreach($lista->tareas as $tarea)
-            <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+            <div class="modal fade" id="tareaModal-{{ $tarea->id }}" tabindex="-1" aria-labelledby="tareaModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -138,14 +154,18 @@
                                 @csrf
                                 @method('PUT')
                                 <select name="estado" class="form-select" onchange="this.form.submit()">
-                                    <option value="Pendiente" {{ $tarea->estado == 'Pendiente' ? 'selected' : '' }}>Pendiente</option>
-                                    <option value="En Progreso" {{ $tarea->estado == 'En Progreso' ? 'selected' : '' }}>En Progreso</option>
-                                    <option value="Finalizada" {{ $tarea->estado == 'Finalizada' ? 'selected' : '' }}>Finalizada</option>
+                                    <option value="Pendiente" {{ $tarea->estado == 'Pendiente' ? 'selected' : '' }}>Pendiente
+                                    </option>
+                                    <option value="En Progreso" {{ $tarea->estado == 'En Progreso' ? 'selected' : '' }}>En
+                                        Progreso</option>
+                                    <option value="Finalizada" {{ $tarea->estado == 'Finalizada' ? 'selected' : '' }}>Finalizada
+                                    </option>
                                 </select>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
+                            <form action="{{ route('tareas.destroy', $tarea->id) }}" method="POST"
+                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Eliminar Tarea</button>
