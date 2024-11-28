@@ -25,7 +25,7 @@ class TableroController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Debes estar autenticado para crear un tablero.');
         }
-        
+
         Tablero::create([
             'name' => $request->name,
             'id_user' => Auth::id(),
@@ -51,28 +51,16 @@ class TableroController extends Controller
         // Obtener el tablero con sus listas y tareas
         $tablero = Tablero::with('listas.tareas')->findOrFail($id);
 
+        foreach ($tablero->listas as $lista) {
+            $totalTareas = $lista->tareas->count();
+            $tareasCompletadas = $lista->tareas->where('estado', 'Finalizada')->count();
+
+            $lista->porcentajeCompletado = $totalTareas > 0 ? round(($tareasCompletadas / $totalTareas) * 100, 2) : 0;
+        }
+
         return view('tableros.show', compact('tablero'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tablero $tablero)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tablero $tablero)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         // Encuentra el tablero por ID
