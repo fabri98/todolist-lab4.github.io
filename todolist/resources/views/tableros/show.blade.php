@@ -119,7 +119,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_limite">Fecha Límite</label>
-                                <input type="date" name="fecha_limite" class="form-control" required>
+                                <input type="date" name="fecha_limite" class="form-control" id="fecha_limite" required>
                             </div>
                             <div class="mb-3">
                                 <label for="estado" class="form-label">Estado</label>
@@ -193,4 +193,14 @@
             arrowIcon.classList.replace("bi-arrow-up", "bi-arrow-down");
         }
     }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const fechaLimiteInputs = document.querySelectorAll('input[type="date"]');
+        const hoy = new Date().toISOString().split('T')[0];
+
+        fechaLimiteInputs.forEach(input => {
+            input.setAttribute('min', hoy);
+        });
+    });
 </script>
