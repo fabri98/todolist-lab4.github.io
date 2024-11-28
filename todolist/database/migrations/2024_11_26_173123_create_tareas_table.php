@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('id_lista')->constrained('listas')->onDelete('cascade');
             $table->string('titulo');
             $table->text('descripcion')->nullable();
-            $table->enum('estado', ['pendiente', 'completada', 'en_progreso'])->default('pendiente');
+            $table->enum('estado', ['Pendiente', 'Finalizada', 'En Progreso'])->default('Pendiente');
             $table->date('fecha_limite')->nullable();
             $table->timestamps();
         });
