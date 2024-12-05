@@ -10,6 +10,7 @@ class CreateTablerosTable extends Migration
     {
         Schema::create('tableros', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->text('descripcion')->nullable(); // Asegúrate de que esta línea esté presente
             $table->timestamps();
