@@ -38,12 +38,7 @@
                         name="remember">
                     <span class="ml-2">{{ __('Recuérdame') }} </span>
                 </label>
-                @if (Route::has('password.request'))
-                    <a class="text-sm text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-500"
-                        href="{{ route('password.request') }}">
-                        {{ __('¿Olvidaste tu contraseña?') }}
-                    </a>
-                @endif
+                
             </div>
 
             <!-- Botón de Inicio de Sesión y Enlace de Registro -->
